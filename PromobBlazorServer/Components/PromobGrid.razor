@@ -1,0 +1,288 @@
+﻿@using MudBlazor
+@using static PromobEnums
+@inherits PromobBaseComponent
+
+<MudGrid @ref="Ref" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+    Justify="@GetJustify(Justify)"
+    Spacing="@Spacing"
+>
+    @if (GridType != GridType.None)
+    {
+        <PromobGridColumn Width="GetColumn1Width()" StyleTextAlign="_Column1TextAlign">
+            @Column1
+            @ChildContent
+        </PromobGridColumn>
+        <PromobVisible Visible="@GetColumn2Visible()">
+            <PromobGridColumn Width="GetColumn2Width()" StyleTextAlign="Column2TextAlign">
+                @Column2
+            </PromobGridColumn>
+        </PromobVisible>
+        <PromobVisible Visible="@GetColumn3Visible()">
+            <PromobGridColumn Width="GetColumn3Width()" StyleTextAlign="Column3TextAlign">
+                @Column3
+            </PromobGridColumn>
+        </PromobVisible>
+        <PromobVisible Visible="@GetColumn4Visible()">
+            <PromobGridColumn Width="GetColumn4Width()" StyleTextAlign="Column4TextAlign">
+                @Column4
+            </PromobGridColumn>
+        </PromobVisible>
+        <PromobVisible Visible="@GetColumn5Visible()">
+            <PromobGridColumn Width="GetColumn5Width()" StyleTextAlign="Column5TextAlign">
+                @Column5
+            </PromobGridColumn>
+        </PromobVisible>
+        <PromobVisible Visible="@GetColumn6Visible()">
+            <PromobGridColumn Width="GetColumn6Width()" StyleTextAlign="Column6TextAlign">
+                @Column6
+            </PromobGridColumn>
+        </PromobVisible>
+    }
+    else
+    {
+        @ChildContent
+    }
+</MudGrid>
+
+@code {
+    /// <summary>
+    /// Items alignment. Default: Justify.FlexStart
+    /// </summary>
+    [Parameter] public Justify Justify { get; set; } = Justify.FlexStart;
+
+    /// <summary>
+    /// Spacing level between columns. Default: 2
+    /// </summary>
+    [Parameter] public int Spacing { get; set; } = 2;
+
+    /// <summary>
+    /// In this field, select the number of predefined columns. Then fill in the spaces <Column1>, <Column2> [...]. Default: GridType.None
+    /// </summary>
+    [Parameter] public GridType GridType { get; set; } = GridType.None;
+
+    /// <summary>
+    /// Child Content of the component if GridType.None. 
+    /// </summary>
+    [Parameter] public override RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Content to be filled in Column 1. Default: null
+    /// </summary>
+    [Parameter] public RenderFragment? Column1 { get; set; }
+
+    /// <summary>
+    /// Content to be filled in Column 2. Default: null
+    /// </summary>
+    [Parameter] public RenderFragment? Column2 { get; set; }
+
+    /// <summary>
+    /// Content to be filled in Column 3. Default: null
+    /// </summary>
+    [Parameter] public RenderFragment? Column3 { get; set; }
+
+    /// <summary>
+    /// Content to be filled in Column 4. Default: null
+    /// </summary>
+    [Parameter] public RenderFragment? Column4 { get; set; }
+
+    /// <summary>
+    /// Content to be filled in Column 5. Default: null
+    /// </summary>
+    [Parameter] public RenderFragment? Column5 { get; set; }
+
+    /// <summary>
+    /// Content to be filled in Column 6. Default: null
+    /// </summary>
+    [Parameter] public RenderFragment? Column6 { get; set; }
+
+    private MudGrid Ref { get; set; }
+
+    private TextAlign _Column1TextAlign => Column1TextAlign ?? (GridType == GridType._2ColumnsWidth2x10 ||
+                                                                GridType == GridType._2ColumnsWidth3x9 ||
+                                                                GridType == GridType._2ColumnsWidth4x8 ||
+                                                                GridType == GridType._2ColumnsWidth5x7 ? TextAlign.Right : TextAlign._None);
+
+    /// <summary>
+    /// TextAlign of the contents of Column 1. If not set, for Column 1 specifically, it will be considered TextAlign.right if the GridType is two Columns. For all other cases: null
+    /// </summary>
+    [Parameter] public TextAlign? Column1TextAlign { get; set; } = null;
+
+    /// <summary>
+    /// TextAlign of the contents of Column 2. Default: TextAlign.Nenhum
+    /// </summary>
+    [Parameter] public TextAlign Column2TextAlign { get; set; } = TextAlign._None;
+
+    /// <summary>
+    /// TextAlign of the contents of Column 3. Default: TextAlign.Nenhum
+    /// </summary>
+    [Parameter] public TextAlign Column3TextAlign { get; set; } = TextAlign._None;
+
+    /// <summary>
+    /// TextAlign of the contents of Column 4. Default: TextAlign.Nenhum
+    /// </summary>
+    [Parameter] public TextAlign Column4TextAlign { get; set; } = TextAlign._None;
+
+    /// <summary>
+    /// TextAlign of the contents of Column 5. Default: TextAlign.Nenhum
+    /// </summary>
+    [Parameter] public TextAlign Column5TextAlign { get; set; } = TextAlign._None;
+
+    /// <summary>
+    /// TextAlign of the contents of Column 6. Default: TextAlign.Nenhum
+    /// </summary>
+    [Parameter] public TextAlign Column6TextAlign { get; set; } = TextAlign._None;
+
+    /// <summary>
+    /// Value to be added in the "align-items" property of style. Default: AlignItems.Baseline
+    /// </summary>
+    [Parameter] public override AlignItems StyleAlignItems { get; set; } = AlignItems.Baseline;
+
+    private int GetColumn1Width()
+    {
+        switch (GridType)
+        {
+            default: return 12;
+            case GridType._1ColumnWidth10: return 10;
+            case GridType._1ColumnWidth9: return 9;
+            case GridType._1ColumnWidth8: return 8;
+            case GridType._1ColumnWidth7: return 7;
+            case GridType._1ColumnWidth6 or GridType._2Columns: return 6;
+            case GridType._1ColumnWidth5 or GridType._2ColumnsWidth5x7: return 5;
+            case GridType._1ColumnWidth4 or GridType._2ColumnsWidth4x8 or GridType._3Columns: return 4;
+            case GridType._1ColumnWidth3 or GridType._2ColumnsWidth3x9 or GridType._4Columns: return 3;
+            case GridType._5Columns or GridType._6Columns or GridType._2ColumnsWidth2x10: return 2;
+        }
+    }
+    private int GetColumn2Width()
+    {
+        switch (GridType)
+        {
+            default: return 12;
+            case GridType._1ColumnWidth10 or GridType._2ColumnsWidth2x10: return 10;
+            case GridType._1ColumnWidth9 or GridType._2ColumnsWidth3x9: return 9;
+            case GridType._1ColumnWidth8 or GridType._2ColumnsWidth4x8: return 8;
+            case GridType._1ColumnWidth7 or GridType._2ColumnsWidth5x7: return 7;
+            case GridType._2Columns: return 6;
+            case GridType._3Columns: return 4;
+            case GridType._4Columns: return 3;
+            case GridType._5Columns or GridType._6Columns: return 2;
+        }
+    }
+    private int GetColumn3Width()
+    {
+        switch (GridType)
+        {
+            default: return 12;
+            case GridType._1ColumnWidth3 or GridType._2ColumnsWidth3x9 or GridType._4Columns: return 3;
+            case GridType._1ColumnWidth4 or GridType._2ColumnsWidth4x8 or GridType._3Columns: return 4;
+            case GridType._1ColumnWidth5 or GridType._2ColumnsWidth5x7: return 5;
+            case GridType._1ColumnWidth6 or GridType._2Columns: return 6;
+            case GridType._5Columns or GridType._6Columns or GridType._2ColumnsWidth2x10: return 2;
+        }
+    }
+    private int GetColumn4Width()
+    {
+        switch (GridType)
+        {
+            default: return 12;
+            case GridType._1ColumnWidth3 or GridType._2ColumnsWidth3x9 or GridType._4Columns: return 3;
+            case GridType._1ColumnWidth4 or GridType._2ColumnsWidth4x8 or GridType._3Columns: return 4;
+            case GridType._1ColumnWidth5 or GridType._2ColumnsWidth5x7: return 5;
+            case GridType._1ColumnWidth6 or GridType._2Columns: return 6;
+            case GridType._5Columns or GridType._6Columns or GridType._2ColumnsWidth2x10: return 2;
+        }
+    }
+    private int GetColumn5Width()
+    {
+        switch (GridType)
+        {
+            default: return 12;
+            case GridType._1ColumnWidth3 or GridType._2ColumnsWidth3x9 or GridType._4Columns: return 3;
+            case GridType._1ColumnWidth4 or GridType._2ColumnsWidth4x8 or GridType._3Columns: return 4;
+            case GridType._1ColumnWidth5 or GridType._2ColumnsWidth5x7: return 5;
+            case GridType._1ColumnWidth6 or GridType._2Columns: return 6;
+            case GridType._5Columns or GridType._6Columns or GridType._2ColumnsWidth2x10: return 2;
+        }
+    }
+    private int GetColumn6Width()
+    {
+        switch (GridType)
+        {
+            default: return 12;
+            case GridType._1ColumnWidth3 or GridType._2ColumnsWidth3x9 or GridType._4Columns: return 3;
+            case GridType._1ColumnWidth4 or GridType._2ColumnsWidth4x8 or GridType._3Columns: return 4;
+            case GridType._1ColumnWidth5 or GridType._2ColumnsWidth5x7: return 5;
+            case GridType._1ColumnWidth6 or GridType._2Columns: return 6;
+            case GridType._5Columns or GridType._6Columns or GridType._2ColumnsWidth2x10: return 2;
+        }
+    }
+
+    private bool GetColumn2Visible() => !GridType1Column();
+    private bool GetColumn3Visible() => GetColumn2Visible() && !GridType2Column();
+    private bool GetColumn4Visible() => GetColumn3Visible() && !GridType3Column();
+    private bool GetColumn5Visible() => GetColumn4Visible() && !GridType4Column();
+    private bool GetColumn6Visible() => GetColumn5Visible() && !GridType5Column();
+    private bool GridType1Column()
+    {
+        switch (GridType)
+        {
+            case GridType.None or
+                 GridType._1Column or
+                 GridType._1ColumnWidth3 or
+                 GridType._1ColumnWidth4 or
+                 GridType._1ColumnWidth5 or
+                 GridType._1ColumnWidth6 or
+                 GridType._1ColumnWidth7 or
+                 GridType._1ColumnWidth8 or
+                 GridType._1ColumnWidth9 or
+                 GridType._1ColumnWidth10:
+                return true;
+
+            default: return false;
+        }
+    }
+    private bool GridType2Column()
+    {
+        switch (GridType)
+        {
+            case GridType._2Columns or
+                 GridType._2ColumnsWidth2x10 or
+                 GridType._2ColumnsWidth3x9 or
+                 GridType._2ColumnsWidth4x8 or
+                 GridType._2ColumnsWidth5x7:
+                return true;
+
+            default: return false;
+        }
+    }
+    private bool GridType3Column()
+    {
+        switch (GridType)
+        {
+            case GridType._3Columns:
+                return true;
+
+            default: return false;
+        }
+    }
+    private bool GridType4Column()
+    {
+        switch (GridType)
+        {
+            case GridType._4Columns:
+                return true;
+
+            default: return false;
+        }
+    }
+    private bool GridType5Column()
+    {
+        switch (GridType)
+        {
+            case GridType._5Columns:
+                return true;
+
+            default: return false;
+        }
+    }
+}

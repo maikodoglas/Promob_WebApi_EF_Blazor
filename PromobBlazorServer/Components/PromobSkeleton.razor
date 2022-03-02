@@ -1,0 +1,33 @@
+﻿@using MudBlazor
+@using static PromobEnums
+@inherits PromobBaseComponent
+
+<MudSkeleton @ref="Ref" Tag="@Tag" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+             Animation="@GetAnimation(Animation)"
+             Height="@Height"
+             SkeletonType="@GetSkeletonType(SkeletonType)"
+             Width="@Width" />
+
+@code {
+    private MudSkeleton? Ref { get; set; }
+
+    /// <summary>
+    /// Animation style, if false it will be disabled. Default: Animation.Wave
+    /// </summary>
+    [Parameter] public Animation Animation { get; set; } = Animation.Wave;
+
+    /// <summary>
+    /// Height defined in string, needs px or % or equal prefix. Default: "56px"
+    /// </summary>
+    [Parameter] public string Height { get; set; } = "56px";
+
+    /// <summary>
+    /// With defined in string, needs px or % or equal prefix. Default: 100%
+    /// </summary>
+    [Parameter] public string Width { get; set; } = "100%";
+
+    /// <summary>
+    /// Shape of the skeleton that will be rendered. Default: SkeletonType.Rectangle
+    /// </summary>
+    [Parameter] public SkeletonType SkeletonType { get; set; } = SkeletonType.Rectangle;
+}

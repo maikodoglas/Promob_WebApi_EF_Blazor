@@ -1,0 +1,34 @@
+﻿@using MudBlazor
+@using static PromobEnums
+@inherits PromobBaseComponent
+
+<MudPaper @ref="Ref" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+    Elevation="@GetElevation(Elevation)"
+    Outlined="@Outlined"
+    Square="@Square" >
+    @ChildContent
+</MudPaper>
+
+@code {
+    /// <summary>
+    /// The higher the number, the heavier the drop-shadow. Default: Elevation.MEdium
+    /// </summary>
+    [Parameter] public Elevation Elevation { get; set; } = Elevation.Medium;
+
+    /// <summary>
+    /// If true, card will be outlined. Default: false
+    /// </summary>
+    [Parameter] public bool Outlined { get; set; } = false;
+
+    /// <summary>
+    /// If true, border-radius is set to 0. Default: false
+    /// </summary>
+    [Parameter] public bool Square { get; set; } = false;
+
+    /// <summary>
+    /// User class names, separated by space. Default: "pa-6 ma-2"
+    /// </summary>
+    [Parameter] public override string Class { get; set; } = "pa-6 ma-2";
+
+    private MudPaper Ref { get; set; }
+}

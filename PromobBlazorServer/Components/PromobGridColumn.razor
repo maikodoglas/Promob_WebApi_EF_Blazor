@@ -1,0 +1,78 @@
+﻿@using MudBlazor
+@inherits PromobBaseComponent
+
+<MudItem @ref="Ref" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+         xs="@GetWidthXs()"
+         sm="@GetWidthSm()"
+         md="@GetWidthMd()"
+         lg="@GetWidthLg()"
+         xl="@GetWidthXl()"
+         xxl="@GetWidthXxl()">
+    @ChildContent
+</MudItem>
+
+@code {
+    /// <summary>
+    /// Default width to be considered in the column. You must enter a number between 1 and 12. Default: 12
+    /// </summary>
+    [Parameter] public int Width { get; set; } = 12;
+
+    /// <summary>
+    /// Column width to be considered for screen size Xs. If not set, the Width parameter will be considered. Default: 0
+    /// </summary>
+    [Parameter] public int Xs { get; set; } = 0;
+
+    /// <summary>
+    /// Column width to be considered for screen size Sm. If not set, the Width parameter will be considered. Default: 0
+    /// </summary>
+    [Parameter] public int Sm { get; set; } = 0;
+
+    /// <summary>
+    /// Column width to be considered for screen size Md. If not set, the Width parameter will be considered. Default: 0
+    /// </summary>
+    [Parameter] public int Md { get; set; } = 0;
+
+    /// <summary>
+    /// Column width to be considered for screen size Lg. If not set, the Width parameter will be considered. Default: 0
+    /// </summary>
+    [Parameter] public int Lg { get; set; } = 0;
+
+    /// <summary>
+    /// Column width to be considered for screen size Xl. If not set, the Width parameter will be considered. Default: 0
+    /// </summary>
+    [Parameter] public int Xl { get; set; } = 0;
+
+    /// <summary>
+    /// Column width to be considered for screen size Xxl. If not set, the Width parameter will be considered. Default: 0
+    /// </summary>
+    [Parameter] public int Xxl { get; set; } = 0;
+
+    private MudItem Ref { get; set; }
+
+    private int GetWidth(WidthType widthType)
+    {
+        int width = GetWidth(Width, returnWidthType: false);
+
+        switch (widthType)
+        {
+            case WidthType.Xs:
+                return 12;
+
+            case WidthType.Sm:
+                return width == 12 ? 12 : 6;
+
+            case WidthType.Md:
+                return width == 12 ? 12 : width <= 2 ? 3 : width <= 4 ? 4 : 6;
+
+            default:
+                return width;
+        }
+    }
+    private int GetWidth(int width, WidthType widthType = WidthType.Lg, bool returnWidthType = true) => width > 12 ? 12 : width > 0 ? width : returnWidthType ? GetWidth(widthType) : 12;
+    private int GetWidthXs() => GetWidth(Xs, WidthType.Xs);
+    private int GetWidthSm() => GetWidth(Sm, WidthType.Sm);
+    private int GetWidthMd() => GetWidth(Md, WidthType.Md);
+    private int GetWidthLg() => GetWidth(Lg, WidthType.Lg);
+    private int GetWidthXl() => GetWidth(Xl, WidthType.Xl);
+    private int GetWidthXxl() => GetWidth(Xxl, WidthType.Xxl);
+}

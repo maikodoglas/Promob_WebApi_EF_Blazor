@@ -1,0 +1,30 @@
+﻿@if (Visible)
+{
+    @ChildContent
+}
+
+@code {
+    /// <summary>
+    /// Child Content of the component.
+    /// </summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// If false, do not render its child components. Default: true
+    /// </summary>
+    [Parameter] public bool Visible { get; set; } = true;
+
+    public async Task SetVisible(bool visible)
+    {
+        if (Visible == visible)
+            return;
+
+        Visible = visible;
+        await RefreshComponent();
+    }
+    private async Task RefreshComponent()
+    {
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,95 @@
+﻿@page "/"
+@using PromobBlazorServer.Data
+@inject EmployeeService employeeService
+
+<PageTitle>Employees</PageTitle>
+
+<PromobContainer MaxWidth="MaxWidth.Medium">
+    <PromobPaper>
+        <PromobText Typo="Typo.H4" StyleTextAlign="TextAlign.Left" StyleWhiteSpace="WhiteSpace.Inherit">Employees</PromobText>
+    
+        @if (PageMode == PageMode.Search)
+        {
+            <PromobGrid GridType="GridType._1ColumnWidth4" Justify="Justify.Center">
+                <Column1>
+                    <PromobButton OnClick="@(e => ChangePageMode(PageMode.Edit))" FullWidth="true">New Employee</PromobButton>
+                </Column1>
+            </PromobGrid>
+            <PromobDivider StyleMarginTop="15" StyleMarginBottom="15"></PromobDivider>
+            <table class='table table-hover'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birthdate</th>
+                        <th>My Decimal Field</th>
+                        <th>Happy?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (employees != null)
+                    {
+                        @foreach (var item in employees)
+                        {
+                        <tr onclick="@(() => Show(item.Id))">
+                            <td>@item.Id</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.BirthDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@item.MyDecimalField.ToString()</td>
+                            <td>@(!item.AmIHappy.HasValue ? "Dunno" : item.AmIHappy.Value ? "Yes" : "No")</td>
+                        </tr>
+                        }
+                        
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            if (PageMode == PageMode.Edit)
+            {
+                <PromobGrid GridType="GridType._2Columns" StyleMarginBottom="20" Justify="Justify.Center">
+                    <Column1>
+                        <PromobButton OnClick="@(e => ChangePageMode(PageMode.Search))" FullWidth="true">Cancel</PromobButton>
+                    </Column1>
+                    <Column2>
+                        <PromobButton Color="Color.Success" OnClick="@Save" FullWidth="true">Save Changes</PromobButton>
+                    </Column2>
+                </PromobGrid>
+                <PromobVisible Visible="@(employeeId > 0)">
+                    <PromobGrid GridType="GridType._1ColumnWidth6" Justify="Justify.Center">
+                        <Column1>
+                            <PromobButton Color="Color.Error" FullWidth="true" OnClick="@Delete">Delete</PromobButton>
+                        </Column1>
+                    </PromobGrid>
+                </PromobVisible>
+                <PromobDivider StyleMarginTop="15" StyleMarginBottom="15"></PromobDivider>
+                <PromobGrid GridType="GridType._2Columns">
+                    <Column1>
+                        <PromobTextField @bind-Text="@firstName" Label="First Name"></PromobTextField>
+                    </Column1>
+                    <Column2>
+                        <PromobTextField @bind-Text="@lastName" Label="Last Name"></PromobTextField>
+                    </Column2>
+                </PromobGrid>
+                <PromobGrid GridType="GridType._1Column">
+                    <Column1>
+                        <PromobTextField @bind-Text="@decimalfield" Label="My Decimal Number"></PromobTextField>
+                    </Column1>
+                </PromobGrid>
+                <PromobGrid GridType="GridType._1Column">
+                    <Column1>
+                        <PromobTextField @bind-Text="@birthdate" Label="Birthdate" type="date"></PromobTextField>
+                    </Column1>
+                </PromobGrid>
+                <PromobGrid GridType="GridType._1Column">
+                    <Column1>
+                        <MudBlazor.MudCheckBox @bind-Checked="@happy" Label="Are you Happy?" TriState="true"></MudBlazor.MudCheckBox>
+                    </Column1>
+                </PromobGrid>
+            }
+        }
+    </PromobPaper>
+</PromobContainer>

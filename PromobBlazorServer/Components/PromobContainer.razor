@@ -1,0 +1,17 @@
+﻿@using MudBlazor
+@using static PromobEnums
+@inherits PromobBaseComponent
+
+<MudContainer @ref="Ref" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+    MaxWidth="@GetMaxWidth(MaxWidth)">
+    @ChildContent
+</MudContainer>
+@code {
+    private MudContainer Ref { get; set; }
+
+    /// <summary>
+    /// Determine the max-width of the container. The container width grows with the size of the screen. Set to false to disable maxWidth. Default: MaxWidth.Large
+    /// </summary>
+    [Parameter] public MaxWidth MaxWidth { get; set; } = MaxWidth.Large;
+
+}

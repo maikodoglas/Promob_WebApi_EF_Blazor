@@ -1,0 +1,18 @@
+﻿@using MudBlazor
+@inherits PromobBaseComponent
+
+<MudDivider @ref="Ref" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"></MudDivider>
+
+@code {
+    private MudDivider Ref { get; set; }
+
+    /// <summary>
+    /// Value in pixels (px) to be added in the "margin-top" property of style. Default: 15
+    /// </summary>
+    [Parameter] public override int? StyleMarginTop { get; set; } = 15;
+
+    /// <summary>
+    /// Value in pixels (px) to be added in the "margin-bottom" property of style. Default: 15
+    /// </summary>
+    [Parameter] public override int? StyleMarginBottom { get; set; } = 15;
+}

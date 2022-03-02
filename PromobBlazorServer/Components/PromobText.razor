@@ -1,0 +1,121 @@
+﻿@using MudBlazor
+@using static PromobEnums
+@inherits PromobBaseComponent
+
+@if (SkeletonVisible)
+{
+    <PromobSkeleton SkeletonType="SkeletonType.Text" />
+}
+else
+{
+    <MudText @ref="Ref" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+        Align="@GetAlign(Align)"
+        Color="@GetColor(Color)"
+        GutterBottom="@GutterBottom"
+        Inline="@Inline"
+        Typo="@GetTypo(Typo)">
+        @Text
+        @ChildContent
+    </MudText>
+}
+@code {
+    private bool SkeletonVisible { get; set; } = true;
+
+    private MudText Ref { get; set; }
+
+    /// <summary>
+    /// Text to be displayed in the component. It has the same functionality as ChildContent. Default: null
+    /// </summary>
+    [Parameter] public string Text { get; set; }
+
+    /// <summary>
+    /// Set the text-align on the component. Default: Align.Left
+    /// </summary>
+    [Parameter] public Align Align { get; set; } = Align.Left;
+
+    /// <summary>
+    /// The color of the component. It supports the theme colors. Default: Color.Default
+    /// </summary>
+    [Parameter] public Color Color { get; set; } = Color.Default;
+
+    /// <summary>
+    /// If true, the text will have a bottom margin. Default: true
+    /// </summary>
+    [Parameter] public bool GutterBottom { get; set; } = true;
+
+    /// <summary>
+    /// If true, Sets display inline. Default: false
+    /// </summary>
+    [Parameter] public bool Inline { get; set; } = false;
+
+    /// <summary>
+    /// Applies the theme typography styles. Default: Typo.Inherit
+    /// </summary>
+    [Parameter] public Typo Typo { get; set; } = Typo.Inherit;
+
+    /// <summary>
+    /// Value to be added in the "overflow-wrap" property of style. Default: OverflowWrap.BreakWord
+    /// </summary>
+    [Parameter] public override OverflowWrap StyleOverflowWrap { get; set; } = OverflowWrap.BreakWord;
+
+    public async Task SetAlign(Align align)
+    {
+        if (Align == align)
+            return;
+
+        Align = align;
+        await RefreshComponent();
+    }
+    public async Task SetColor(Color color)
+    {
+        if (Color == color)
+            return;
+
+        Color = color;
+        await RefreshComponent();
+    }
+    public async Task SetGutterBottom(bool gutterbottom)
+    {
+        if (GutterBottom == gutterbottom)
+            return;
+
+        GutterBottom = gutterbottom;
+        await RefreshComponent();
+    }
+    public async Task SetInline(bool inline)
+    {
+        if (Inline == inline)
+            return;
+
+        Inline = inline;
+        await RefreshComponent();
+    }
+    public async Task SetTypo(Typo typo)
+    {
+        if (Typo == typo)
+            return;
+
+        Typo = typo;
+        await RefreshComponent();
+    }
+    public async Task SetText(string text)
+    {
+        if (Text == text)
+            return;
+
+        Text = text;
+        await RefreshComponent();
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            SkeletonVisible = false;
+            await RefreshComponent();
+        }
+    }
+
+}

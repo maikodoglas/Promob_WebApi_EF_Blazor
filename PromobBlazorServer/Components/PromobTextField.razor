@@ -1,0 +1,69 @@
+﻿@using MudBlazor
+@using static PromobEnums
+@inherits PromobBaseComponent
+
+@if (SkeletonVisible)
+{
+    <PromobSkeleton />
+}
+else
+{
+    <MudTextField @ref="Ref" @attributes="@UserAttributes" T="string" Style="@BuildStyle()" Class="@Class"
+                    Value="@Text"
+                    ValueChanged="@TextChanged"
+                    @bind-Text="@Text"
+                    Label="@Label"
+                    Variant="Variant.Outlined">
+        @ChildContent
+    </MudTextField>
+}
+
+@code {
+    private bool SkeletonVisible { get; set; } = true;
+
+    private MudTextField<string> Ref { get; set; }
+    private string Value { get; set; }
+    [Parameter] public string Text { get; set; }
+    [Parameter] public string Label { get; set; }
+
+    private EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public EventCallback<string> LabelChanged { get; set; }
+    [Parameter] public EventCallback<string> TextChanged { get; set; }
+
+    public async Task Focus()
+    {
+        if (Ref != null)
+        {
+            await Ref.FocusAsync();
+            await RefreshComponent();
+        }
+    }
+
+    private async Task SetValue(string pValue)
+    {
+        if (Value == pValue)
+            return;
+
+        await ValueChanged.InvokeAsync(Value = pValue);
+        await RefreshComponent();
+    }
+    public async Task SetLabel(string pLabel)
+    {
+        if (Label == pLabel)
+            return;
+
+        await LabelChanged.InvokeAsync(Label = pLabel);
+        await RefreshComponent();
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            SkeletonVisible = false;
+            await RefreshComponent();
+        }
+    }
+}

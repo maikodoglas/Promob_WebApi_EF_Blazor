@@ -1,0 +1,82 @@
+﻿@using MudBlazor
+@using static PromobEnums
+@inherits PromobBaseComponent
+
+@if (SkeletonVisible)
+{
+    <PromobSkeleton Height="36px" Width="150px" />
+}
+else
+{
+    <MudButton @ref="Ref" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+        Color="@GetColor(Color)"
+        Disabled="@disabled"
+        FullWidth="@FullWidth"
+        OnClick="_OnClick"
+        Size="@GetSize(Size)"
+        Variant="Variant.Filled"
+        StartIcon="@StartIcon"
+                >
+        @if (DisableButtonOnClickProcessing)
+        {
+            <PromobProgress Size="Size.Small" StyleMarginRight="10" />
+            <PromobText Text="@DisableButtonOnClickMessage" StyleWhiteSpace="WhiteSpace._None"></PromobText>
+        }
+        else
+        {
+            @Text
+            @ChildContent
+        }
+    </MudButton>
+}
+@code {
+    private bool SkeletonVisible { get; set; } = true;
+
+    private bool disabled => Disabled || DisableButtonOnClickProcessing;
+
+    private MudButton Ref { get; set; }
+
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    [Parameter] public string Text { get; set; }
+    [Parameter] public Color Color { get; set; } = Color.Primary;
+
+    [Parameter] public bool DisableButtonOnClick { get; set; } = false;
+    [Parameter] public bool DisableButtonOnClickProcessing { get; set; } = false;
+    [Parameter] public string DisableButtonOnClickMessage { get; set; } = "Wait it for it...";
+
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string StartIcon { get; set; }
+    [Parameter] public bool FullWidth { get; set; }
+    [Parameter] public Size Size { get; set; } = Size.Medium;
+
+    private async Task _OnClick()
+    {
+        if (DisableButtonOnClick)
+        {
+            await SetDisableButtonOnClickProcessing(true);
+        }
+
+        await OnClick.InvokeAsync();
+    }
+        
+    public async Task SetDisableButtonOnClickProcessing(bool disableButtonOnClickProcessing)
+    {
+        if (DisableButtonOnClickProcessing == disableButtonOnClickProcessing)
+            return;
+
+        DisableButtonOnClickProcessing = disableButtonOnClickProcessing;
+        await RefreshComponent();
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            SkeletonVisible = false;
+            await RefreshComponent();
+        }
+    }
+}

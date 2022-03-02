@@ -1,0 +1,35 @@
+﻿@using MudBlazor
+@using static PromobEnums
+@inherits PromobBaseComponent
+
+@if (ProgressType == ProgressType.Circular)
+{
+    <MudProgressCircular @ref="RefCircular" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+        Color="@GetColor(Color)"
+        Size="@GetSize(Size)"
+        />
+}
+else
+{
+    <MudProgressLinear @ref="RefLinear" @attributes="@UserAttributes" Style="@BuildStyle()" Class="@Class"
+        Color="@GetColor(Color)"
+        Size="@GetSize(Size)"
+        />
+}
+@code {
+    private MudProgressCircular RefCircular { get; set; }
+
+    private MudProgressLinear RefLinear { get; set; }
+
+    [Parameter] public ProgressType ProgressType { get; set; } = ProgressType.Circular;
+
+    /// <summary>
+    /// The color of the component. It supports the theme colors. Default: Color.Default
+    /// </summary>
+    [Parameter] public Color Color { get; set; } = Color.Default;
+
+    /// <summary>
+    /// The size of the component. Default: Size.Medium
+    /// </summary>
+    [Parameter] public Size Size { get; set; } = Size.Medium;
+}

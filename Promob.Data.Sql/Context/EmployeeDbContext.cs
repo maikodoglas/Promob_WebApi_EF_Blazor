@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PromobClassLibrary;
+using Promob.Model.Entities;
 
-namespace PromobWebAPI.Data
+namespace Promob.Data.Sql.Context
 {
     public class EmployeeDbContext : DbContext
     {

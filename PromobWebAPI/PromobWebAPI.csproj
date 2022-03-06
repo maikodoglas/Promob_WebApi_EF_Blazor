@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PromobClassLibrary\PromobClassLibrary.csproj" />
+    <ProjectReference Include="..\Promob.Application.Abstractions\Promob.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\Promob.Data.Sql.Abstractions\Promob.Data.Sql.Abstractions.csproj" />
+    <ProjectReference Include="..\PromobClassLibrary\Promob.Model.csproj" />
   </ItemGroup>
 
 </Project>

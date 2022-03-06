@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PromobClassLibrary\PromobClassLibrary.csproj" />
+    <ProjectReference Include="..\PromobClassLibrary\Promob.Model.csproj" />
   </ItemGroup>
 
 </Project>

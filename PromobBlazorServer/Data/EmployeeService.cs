@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PromobClassLibrary;
+using Promob.Model.Entities;
 using RestSharp;
 using System.Net;
 using System.Text;

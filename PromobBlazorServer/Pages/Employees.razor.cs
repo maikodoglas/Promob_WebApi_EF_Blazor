@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Promob.Model.Entities;
 using PromobBlazorServer.Components;
 using PromobBlazorServer.Data;
-using PromobClassLibrary;
 using RestSharp;
 
 namespace PromobBlazorServer.Pages

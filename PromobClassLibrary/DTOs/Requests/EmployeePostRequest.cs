@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace PromobClassLibrary
+namespace Promob.Model.DTOs.Requests
 {
-    public class Employee
+    public class EmployeePostRequest
     {
-        public long Id { get; set; }
-
-        [Required]
         public string? FirstName { get; set; }
-        
+
         public string? LastName { get; set; }
 
-        [Required]
         public DateTime? BirthDate { get; set; }
 
         public decimal MyDecimalField { get; set; }

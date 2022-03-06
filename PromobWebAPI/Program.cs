@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using PromobWebAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -3,11 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromobClassLibrary", "PromobClassLibrary\PromobClassLibrary.csproj", "{B5214A99-9A03-4C7E-9B9C-8490EDA77D95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Promob.Model", "PromobClassLibrary\Promob.Model.csproj", "{B5214A99-9A03-4C7E-9B9C-8490EDA77D95}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromobWebAPI", "PromobWebAPI\PromobWebAPI.csproj", "{A4CFC968-7E07-4076-AF48-69234C587163}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromobBlazorServer", "PromobBlazorServer\PromobBlazorServer.csproj", "{48C6C8BA-F710-4AF3-876A-EFC96C558CCC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Promob.Data.Sql", "Promob.Data.Sql\Promob.Data.Sql.csproj", "{FAE581BF-BA8A-489C-B089-88640D3FEAA5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Promob.Data.Sql.Abstractions", "Promob.Data.Sql.Abstractions\Promob.Data.Sql.Abstractions.csproj", "{B5D56705-DC3C-479F-B770-3BBD14DBD255}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promob.Application.Abstractions", "Promob.Application.Abstractions\Promob.Application.Abstractions.csproj", "{3C00F6C6-0247-4564-9927-D591B4C43020}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promob.Application", "Promob.Application\Promob.Application.csproj", "{618A813B-B2D7-407D-AD16-910F4CDA9F68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{48C6C8BA-F710-4AF3-876A-EFC96C558CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48C6C8BA-F710-4AF3-876A-EFC96C558CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48C6C8BA-F710-4AF3-876A-EFC96C558CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAE581BF-BA8A-489C-B089-88640D3FEAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAE581BF-BA8A-489C-B089-88640D3FEAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAE581BF-BA8A-489C-B089-88640D3FEAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAE581BF-BA8A-489C-B089-88640D3FEAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D56705-DC3C-479F-B770-3BBD14DBD255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D56705-DC3C-479F-B770-3BBD14DBD255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D56705-DC3C-479F-B770-3BBD14DBD255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D56705-DC3C-479F-B770-3BBD14DBD255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C00F6C6-0247-4564-9927-D591B4C43020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C00F6C6-0247-4564-9927-D591B4C43020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C00F6C6-0247-4564-9927-D591B4C43020}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C00F6C6-0247-4564-9927-D591B4C43020}.Release|Any CPU.Build.0 = Release|Any CPU
+		{618A813B-B2D7-407D-AD16-910F4CDA9F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{618A813B-B2D7-407D-AD16-910F4CDA9F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{618A813B-B2D7-407D-AD16-910F4CDA9F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{618A813B-B2D7-407D-AD16-910F4CDA9F68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

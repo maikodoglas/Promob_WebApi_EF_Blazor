@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PromobClassLibrary;
-using PromobWebAPI.Data;
-using System.Globalization;
+using Promob.Application.Abstractions.Services;
+using Promob.Model.DTOs.Requests;
+using Promob.Model.DTOs.Responses;
 
 namespace PromobWebAPI.Controllers
 {
@@ -10,89 +9,37 @@ namespace PromobWebAPI.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeDbContext _context;
+        private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(EmployeeDbContext context)
+        public EmployeeController(IEmployeeService employeeService)
         {
-            _context = context;
+            _employeeService = employeeService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(typeof(EmployeeGetResponse), 200)]
+        public async Task<ActionResult> GetEmployee(int id)
         {
-            return Ok(await _context.Employees.ToListAsync());
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(long id)
-        {
-            Employee? employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
-                return NotFound();
-
-            return Ok(employee);
-        }
-
-        [HttpGet("name/{name}")]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployeesByName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                return BadRequest("Name is empty");
-
-            return Ok(await _context.Employees.Where(r => r.FirstName.Trim().ToLower().Contains(name.Trim().ToLower())).ToListAsync());
-        }
-
-        [HttpGet("happy/{happy:bool?}")]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployeesByName(bool? happy)
-        {
-            return Ok(await _context.Employees.Where(r => r.AmIHappy == happy).ToListAsync());
-        }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> PutEmployee(long id, [FromBody]Employee employee)
-        {
-            if (id != employee.Id)
+            if (id <= 0)
                 return BadRequest();
 
-            _context.Entry(employee).State = EntityState.Modified;
+            var employee = await _employeeService.GetEmployeeAsync(id);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeExists(id))
-                    return NotFound();
-
-                throw;
-            }
+            if (employee is null)
+                return NotFound();
 
             return Ok(employee);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<IActionResult> Post([FromBody] EmployeePostRequest employee)
         {
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+            if (employee is null)
+                return BadRequest();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
+            var result = await _employeeService.InsertAsync(employee);
+
+            return CreatedAtAction("GetEmployee", new { id = result.Id }, result);
         }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Employee>> DeleteEmployee(long id)
-        {
-            Employee? employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
-                return NotFound();
-
-            _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        private bool EmployeeExists(long id) => _context.Employees.Any(r => r.Id == id);
     }
 }
